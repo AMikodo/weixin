@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.star.project.meeting.mapper.UserSigninStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.star.project.meeting.bean.UserSigninStatistics" >
+    <id column="sid" property="sid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="lastsignindate" property="lastsignindate" jdbcType="DATE" />
+    <result column="signincount" property="signincount" jdbcType="INTEGER" />
+    <result column="continutitycount" property="continutitycount" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, uid, lastsignindate, signincount, continutitycount, integral
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from usersigninstatistics
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from usersigninstatistics
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.star.project.meeting.bean.UserSigninStatistics" >
+    insert into usersigninstatistics (sid, uid, lastsignindate, 
+      signincount, continutitycount, integral
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{lastsignindate,jdbcType=DATE}, 
+      #{signincount,jdbcType=INTEGER}, #{continutitycount,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.star.project.meeting.bean.UserSigninStatistics" >
+    insert into usersigninstatistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="lastsignindate != null" >
+        lastsignindate,
+      </if>
+      <if test="signincount != null" >
+        signincount,
+      </if>
+      <if test="continutitycount != null" >
+        continutitycount,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="lastsignindate != null" >
+        #{lastsignindate,jdbcType=DATE},
+      </if>
+      <if test="signincount != null" >
+        #{signincount,jdbcType=INTEGER},
+      </if>
+      <if test="continutitycount != null" >
+        #{continutitycount,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.star.project.meeting.bean.UserSigninStatistics" >
+    update usersigninstatistics
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="lastsignindate != null" >
+        lastsignindate = #{lastsignindate,jdbcType=DATE},
+      </if>
+      <if test="signincount != null" >
+        signincount = #{signincount,jdbcType=INTEGER},
+      </if>
+      <if test="continutitycount != null" >
+        continutitycount = #{continutitycount,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.star.project.meeting.bean.UserSigninStatistics" >
+    update usersigninstatistics
+    set uid = #{uid,jdbcType=INTEGER},
+      lastsignindate = #{lastsignindate,jdbcType=DATE},
+      signincount = #{signincount,jdbcType=INTEGER},
+      continutitycount = #{continutitycount,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

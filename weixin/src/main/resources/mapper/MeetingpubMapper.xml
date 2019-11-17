@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.star.project.meeting.mapper.MeetingpubMapper" >
+  <resultMap id="BaseResultMap" type="com.star.project.meeting.bean.Meetingpub" >
+    <id column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="pcode" property="pcode" jdbcType="VARCHAR" />
+    <result column="ptime" property="ptime" jdbcType="VARCHAR" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="ptitle" property="ptitle" jdbcType="VARCHAR" />
+    <result column="zone" property="zone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, pcode, ptime, tname, ptitle, zone, remark, createdate, status, uid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from meetingpub
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from meetingpub
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.star.project.meeting.bean.Meetingpub" >
+    insert into meetingpub (pid, pcode, ptime, 
+      tname, ptitle, zone, 
+      remark, createdate, status, 
+      uid)
+    values (#{pid,jdbcType=VARCHAR}, #{pcode,jdbcType=VARCHAR}, #{ptime,jdbcType=VARCHAR}, 
+      #{tname,jdbcType=VARCHAR}, #{ptitle,jdbcType=VARCHAR}, #{zone,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT}, 
+      #{uid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.star.project.meeting.bean.Meetingpub" >
+    insert into meetingpub
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pcode != null" >
+        pcode,
+      </if>
+      <if test="ptime != null" >
+        ptime,
+      </if>
+      <if test="tname != null" >
+        tname,
+      </if>
+      <if test="ptitle != null" >
+        ptitle,
+      </if>
+      <if test="zone != null" >
+        zone,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pcode != null" >
+        #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null" >
+        #{ptime,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null" >
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="ptitle != null" >
+        #{ptitle,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null" >
+        #{zone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.star.project.meeting.bean.Meetingpub" >
+    update meetingpub
+    <set >
+      <if test="pcode != null" >
+        pcode = #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null" >
+        ptime = #{ptime,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null" >
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="ptitle != null" >
+        ptitle = #{ptitle,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null" >
+        zone = #{zone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.star.project.meeting.bean.Meetingpub" >
+    update meetingpub
+    set pcode = #{pcode,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=VARCHAR},
+      tname = #{tname,jdbcType=VARCHAR},
+      ptitle = #{ptitle,jdbcType=VARCHAR},
+      zone = #{zone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=SMALLINT},
+      uid = #{uid,jdbcType=INTEGER}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectListByZoneAndStatus" resultType="Meetingpub">
+  	SELECT mp.*   FROM meetingpub mp LEFT JOIN user u 
+  	ON (mp.zone=u.zone OR mp.zone='全国'AND mp.status=1)
+	LEFT JOIN meetinggrab mg ON mp.pid=mg.pid WHERE u.uid=#{arg0}
+    and mp.pid NOT IN (SELECT pid FROM meetinggrab WHERE uid=#{arg0} OR grabstatus=1 ) 
+   	<if test="arg1!='-1'.toString()">
+    AND mp.tname=#{arg1} 
+    </if>
+    ORDER BY mp.pcode DESC
+  </select>
+  <select id="selectMeetingpubList" resultMap="selectMeetingpubListResultMap">
+  	select pub.*,grab.gid,grab.createdate AS createdate2,
+  	grab.grabstatus,grab.remark AS remark2,grab.pid 
+  	AS pid2,grab.grabdate,grab.uid AS uid2 
+  	FROM meetingpub pub LEFT JOIN meetinggrab grab ON 
+  	pub.pid=grab.pid WHERE pub.uid=#{uid} AND pub.`status`=1
+  	 GROUP BY pub.pid ORDER BY pub.pcode
+  </select>
+  <resultMap type="Meetingpub" id="selectMeetingpubListResultMap" extends="BaseResultMap">
+  	<collection property="meetinggrab" javaType="Meetinggrab">
+  		<id column="gid" property="gid" jdbcType="VARCHAR" />
+	    <result column="remark2" property="remark" jdbcType="VARCHAR" />
+	    <result column="pid2" property="pid" jdbcType="VARCHAR" />
+	    <result column="uid2" property="uid" jdbcType="INTEGER" />
+	    <result column="grabstatus" property="grabstatus" jdbcType="SMALLINT" />
+	    <result column="createdate2" property="createdate" jdbcType="TIMESTAMP" />
+	    <result column="grabdate" property="grabdate" jdbcType="TIMESTAMP" />
+  	
+  	</collection>
+  
+  </resultMap>
+  
+  	<select id="selectMeetingpubListBySelective" resultType="Meetingpub">
+  		SELECT  pub.*   FROM meetingpub pub LEFT JOIN `user` u on pub.uid=u.uid
+  			<if test="meetinggrab!=null">
+  				LEFT JOIN meetinggrab grab ON 
+				  	pub.pid=grab.pid
+  			</if>
+  			where u.rid=2 
+  			<if test="pcode!=null and pcode!='' ">
+  				and	pub.pcode=#{pcode}
+  			</if>
+  			<if test="status!=-1 and status!=null">
+  				and pub.status=#{status}
+  			</if>
+  			<if test="user!=null">
+	  			<if test="user.name!=null and user.name!='' ">
+	  				and u.name like '%${user.name}%'
+	  			</if>
+  			</if>
+  			<if test="tname!=null and tname!='' ">
+  				AND pub.tname=#{tname}
+  			</if>
+  			<if test="meetinggrab!=null">
+	  			<if test="meetinggrab.grabstatus!=-1">
+				   and grab.grabstatus=#{meetinggrab.grabstatus} 
+				   and pub.status=1
+			  	 </if>
+			 </if>
+  			 GROUP BY pub.pid ORDER BY pub.pcode
+  	</select>
+  	<delete id="deletebatch" >
+  		delete from meetingpub where pid in 
+  		<foreach collection="array" item="ids" open="(" close=")" separator=",">
+  			#{ids}
+  		</foreach>
+  	</delete>
+  	
+  	<select id="selectMeetingpubListByMeetinggrabGrabstatus" resultType="Meetingpub">
+  		select pub.*
+	  	FROM meetingpub pub 
+	  	<if test="meetinggrab!=null">
+		  	<if test="meetinggrab.grabstatus!=null and meetinggrab.grabstatus!=-1">
+			  	LEFT JOIN meetinggrab grab ON 
+			  	pub.pid=grab.pid WHERE
+			    grab.grabstatus=#{meetinggrab.grabstatus}
+		  	 </if>
+	  	 </if>
+	  	 GROUP BY pub.pid ORDER BY pub.pcode
+  	</select>
+</mapper>

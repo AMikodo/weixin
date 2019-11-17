@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.star.project.meeting.mapper.SigninDateMapper" >
+  <resultMap id="BaseResultMap" type="com.star.project.meeting.bean.SigninDate" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="signindate" property="signindate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uid, signindate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from signindate
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from signindate
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.star.project.meeting.bean.SigninDate" >
+    insert into signindate (id, uid, signindate
+      )
+    values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{signindate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.star.project.meeting.bean.SigninDate" >
+    insert into signindate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="signindate != null" >
+        signindate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="signindate != null" >
+        #{signindate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.star.project.meeting.bean.SigninDate" >
+    update signindate
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="signindate != null" >
+        signindate = #{signindate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.star.project.meeting.bean.SigninDate" >
+    update signindate
+    set uid = #{uid,jdbcType=INTEGER},
+      signindate = #{signindate,jdbcType=DATE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

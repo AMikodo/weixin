@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.star.project.meeting.mapper.MeetinggrabMapper" >
+  <resultMap id="BaseResultMap" type="com.star.project.meeting.bean.Meetinggrab" >
+    <id column="gid" property="gid" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="grabstatus" property="grabstatus" jdbcType="SMALLINT" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="grabdate" property="grabdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gid, remark, pid, uid, grabstatus, createdate, grabdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from meetinggrab
+    where gid = #{gid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from meetinggrab
+    where gid = #{gid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.star.project.meeting.bean.Meetinggrab" >
+    insert into meetinggrab (gid, remark, pid, 
+      uid, grabstatus, createdate, 
+      grabdate)
+    values (#{gid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=INTEGER}, #{grabstatus,jdbcType=SMALLINT}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{grabdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.star.project.meeting.bean.Meetinggrab" >
+    insert into meetinggrab
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="grabstatus != null" >
+        grabstatus,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="grabdate != null" >
+        grabdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="grabstatus != null" >
+        #{grabstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grabdate != null" >
+        #{grabdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.star.project.meeting.bean.Meetinggrab" >
+    update meetinggrab
+    <set >
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="grabstatus != null" >
+        grabstatus = #{grabstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grabdate != null" >
+        grabdate = #{grabdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.star.project.meeting.bean.Meetinggrab" >
+    update meetinggrab
+    set remark = #{remark,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      grabstatus = #{grabstatus,jdbcType=SMALLINT},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      grabdate = #{grabdate,jdbcType=TIMESTAMP}
+    where gid = #{gid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectMeetinggrabListByuid" resultMap="selectMeetinggrabListByuidResultMap" >
+  	SELECT grab.*  ,pub.pid AS pid2 ,pub.remark AS remark2,pub.uid AS uid2 ,
+  	pub.createdate AS createdate2 ,pub.pcode,pub.ptime,pub.tname,pub.ptitle,pub.zone,pub.status
+  	 FROM meetinggrab grab 
+  	LEFT JOIN meetingpub pub ON grab.pid=pub.pid WHERE grab.uid=#{uid}
+  	AND pub.`status`=1 ORDER BY grab.createdate DESC
+  </select>
+  <resultMap type="Meetinggrab" id="selectMeetinggrabListByuidResultMap" extends="BaseResultMap">
+  	<collection property="meetingpub" javaType="Meetingpub">
+  		<id column="pid2" property="pid" jdbcType="VARCHAR" />
+    <result column="pcode" property="pcode" jdbcType="VARCHAR" />
+    <result column="ptime" property="ptime" jdbcType="VARCHAR" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="ptitle" property="ptitle" jdbcType="VARCHAR" />
+    <result column="zone" property="zone" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark" jdbcType="VARCHAR" />
+    <result column="createdate2" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="uid2" property="uid" jdbcType="INTEGER" />
+  	</collection>
+  </resultMap>
+  
+  <select id="selectMeetinggrabListByPid" resultMap="selectMeetinggrabListByPidResultMap">
+  	SELECT grab.*,u.uid AS uid2 , u.`name`,u.email,u.telphone,u.province,
+  	u.city,u.zone ,u.`status`,u.rid,u.createdate AS createdate2 ,u.wid 
+  	from meetinggrab grab LEFT JOIN `user` u ON grab.uid=u.uid 
+  	WHERE grab.pid=#{pid}
+  	AND u.`status`=1 ORDER BY grab.createdate ASC
+  	
+  </select>
+  <resultMap type="Meetinggrab" id="selectMeetinggrabListByPidResultMap" extends="BaseResultMap">
+  	<collection property="user" javaType="User">
+  		 <id column="uid2" property="uid" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="email" property="email" jdbcType="VARCHAR" />
+	    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+	    <result column="province" property="province" jdbcType="VARCHAR" />
+	    <result column="city" property="city" jdbcType="VARCHAR" />
+	    <result column="zone" property="zone" jdbcType="VARCHAR" />
+	    <result column="rid" property="rid" jdbcType="INTEGER" />
+	    <result column="status" property="status" jdbcType="SMALLINT" />
+	    <result column="createdate2" property="createdate" jdbcType="TIMESTAMP" />
+	    <result column="wid" property="wid" jdbcType="INTEGER" />
+  	</collection>
+  
+  </resultMap>
+  	
+  	<select id="selectGrabUserInfo" resultMap="selectGrabUserInfoResultMap">
+  		SELECT grab.*,u.uid AS uid2 , u.`name`,u.email,u.telphone,u.province,
+  		u.city,u.zone ,u.`status`,u.rid,u.createdate AS createdate2 ,u.wid 
+  		from meetinggrab grab LEFT JOIN `user` u ON grab.uid=u.uid 
+  		WHERE pid=#{pid} AND grab.grabstatus=1
+  	</select>
+  	<resultMap type="Meetinggrab" id="selectGrabUserInfoResultMap" extends="BaseResultMap">
+  		<collection property="user" javaType="User">
+  		 <id column="uid2" property="uid" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="email" property="email" jdbcType="VARCHAR" />
+	    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+	    <result column="province" property="province" jdbcType="VARCHAR" />
+	    <result column="city" property="city" jdbcType="VARCHAR" />
+	    <result column="zone" property="zone" jdbcType="VARCHAR" />
+	    <result column="rid" property="rid" jdbcType="INTEGER" />
+	    <result column="status" property="status" jdbcType="SMALLINT" />
+	    <result column="createdate2" property="createdate" jdbcType="TIMESTAMP" />
+	    <result column="wid" property="wid" jdbcType="INTEGER" />
+  	</collection>
+  	</resultMap>
+  	<select id="selectMeetinggrabListByselective" resultMap="selectMeetinggrabListByselectiveResultMap" >
+  		SELECT grab.* ,u.uid AS uid2 , u.`name`,u.email,u.telphone,u.province,
+  		u.city,u.zone ,u.`status`,u.rid,u.createdate AS createdate2 ,u.wid ,
+			pub.pcode ,pub.pid AS pid2 ,pub.ptime,pub.ptime,pub.tname,pub.`status` AS status2,
+			pub.remark AS remark2,pub.zone AS zone2 ,pub.createdate as createdate3,
+			pub.uid AS uid3 
+  			FROM meetinggrab grab LEFT JOIN `user` u ON grab.uid=u.uid
+			LEFT JOIN meetingpub pub ON grab.pid=pub.pid WHERE 
+			 u.rid=1 
+			 <if test="user!=null">
+				 <if test="user.name!=null and user.name!='' ">
+					 AND u.`name` =#{user.name}
+				 </if>
+			</if>
+			<if test="meetingpub!=null  ">
+				 <if test="meetingpub.tname!=null and  meetingpub.tname!='课题分类' ">
+				 	AND pub.tname=#{meetingpub.tname}
+	  			</if>
+  			</if>
+  	</select>
+  	<resultMap type="meetinggrab" id="selectMeetinggrabListByselectiveResultMap" extends="BaseResultMap">
+  		<collection property="user" javaType="User">
+  		 <id column="uid2" property="uid" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="email" property="email" jdbcType="VARCHAR" />
+	    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+	    <result column="province" property="province" jdbcType="VARCHAR" />
+	    <result column="city" property="city" jdbcType="VARCHAR" />
+	    <result column="zone" property="zone" jdbcType="VARCHAR" />
+	    <result column="rid" property="rid" jdbcType="INTEGER" />
+	    <result column="status" property="status" jdbcType="SMALLINT" />
+	    <result column="createdate2" property="createdate" jdbcType="TIMESTAMP" />
+	    <result column="wid" property="wid" jdbcType="INTEGER" />
+  	</collection>
+  	<collection property="meetingpub" javaType="Meetingpub">
+  		<id column="pid2" property="pid" jdbcType="VARCHAR" />
+	    <result column="pcode" property="pcode" jdbcType="VARCHAR" />
+	    <result column="ptime" property="ptime" jdbcType="VARCHAR" />
+	    <result column="tname" property="tname" jdbcType="VARCHAR" />
+	    <result column="ptitle" property="ptitle" jdbcType="VARCHAR" />
+	    <result column="zone2" property="zone" jdbcType="VARCHAR" />
+	    <result column="remark3" property="remark" jdbcType="VARCHAR" />
+	    <result column="createdate3" property="createdate" jdbcType="TIMESTAMP" />
+	    <result column="status2" property="status" jdbcType="SMALLINT" />
+	    <result column="uid2" property="uid" jdbcType="INTEGER" />
+  	</collection>
+  	</resultMap>
+  	
+  	<delete id="deletebatch">
+  		delete from meetinggrab where gid in 
+  		<foreach collection="array" item="ids" open="(" close=")" separator=",">
+  			#{ids}
+  		</foreach>
+  	
+  	</delete>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"  
+	xsi:schemaLocation=" 
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd  
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        ">  
+        <!-- 处理静态资源 -->  
+        <mvc:default-servlet-handler/>
+        <!-- 启动注解 -->
+        <mvc:annotation-driven/>
+        <!-- 扫描 -->  
+        <context:component-scan base-package="com.star" use-default-filters="false" >
+        	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        </context:component-scan>
+        
+		<!-- spring mvc国际化 资源文件bean id 必须存在，必须要叫 messageSource-->
+		<bean id="messageSource"
+		      class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		    <!-- 到类路径下找： i18n_国际化语言编码.properties 配置文件 -->
+		    <property name="basename" value="classpath:i18n" />
+		    <property name="defaultEncoding" value="UTF-8"/>  
+		</bean> 
+		<!-- 配置LocaleChangeInterceptor 主要用于获取请求中的locale信息，将期转为Locale对像，获取LocaleResolver对象-->
+			<mvc:interceptors>
+			    <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"></bean>
+			</mvc:interceptors>
+			  
+			<!-- 配置SessionLocaleResolver用于将Locale对象存储于Session中供后续使用 
+			     需要注意bean id的配置，值必须为localeResolver
+			-->  
+		<bean id="localeResolver"   class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		</bean>
+ </beans>
